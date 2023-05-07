@@ -26,6 +26,13 @@ public class MockApiApplication {
         SpringApplication.run(MockApiApplication.class, args);
     }
 
+    @GetMapping("/auth/appStatus")
+    public Map<String, String> getTherapSystemStatus() {
+        return new HashMap<>() {{
+            put("status", "OK");
+        }};
+    }
+
     @PostMapping("/therap-api/v1/login")
     public Map<String, String> login(@RequestParam String loginName,
                                      @RequestParam String password,
@@ -48,6 +55,7 @@ public class MockApiApplication {
         user.put("code", providerCode);
         user.put("name", "Provider " + faker.address().city());
         user.put("tz", "US/Eastern");
+        user.put("demo", false);
 
         return user;
     }
@@ -74,12 +82,15 @@ public class MockApiApplication {
         user.put("loginName", loginName);
         user.put("firstName", faker.name().firstName());
         user.put("lastName", faker.name().lastName());
-        user.put("title", "Title-" + nextInt);
+        user.put("title", null);
+//        user.put("title", "Title-" + nextInt);
         user.put("providerCode", providerCode);
         user.put("tz", "US/Eastern");
         user.put("employeeId", formSuffix);
-        user.put("mobilePhone", String.valueOf(phoneNumber).replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3"));
-        user.put("email", loginName.concat("@email.com"));
+//        user.put("mobilePhone", String.valueOf(phoneNumber).replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3"));
+        user.put("mobilePhone", "");
+//        user.put("email", loginName.concat("@email.com"));
+        user.put("email", "");
         user.put("providerAdmin", isAdmin);
 
         return user;
